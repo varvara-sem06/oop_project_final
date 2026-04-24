@@ -1,0 +1,26 @@
+# Файлы линтеров и тестов (НО НЕ .coverage и htmlcov)
+.pytest_cache/
+.mypy_cache/
+.tox/
+.ruff_cache/
+# Редакторы и IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+# Виртуальное окружение
+venv/
+env/
+.venv/
+.env
+# Bytecode и кэш Python
+__pycache__/
+*.py[cod]
+*.so
+
+# Python cache
+__pycache__/
+*.pyc
+.pytest_cache/
+htmlcov/
