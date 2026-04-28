@@ -1,7 +1,7 @@
 import pytest
 
 from src.category import Category
-from src.product import Product
+from src.product import LawnGrass, Product, Smartphone
 
 
 class TestCategory:
@@ -62,3 +62,44 @@ class TestCategory:
         product = Product("Ноутбук", "Игровой", 50000, 3)
         category.add_product(product)
         assert str(category) == "Электроника, количество продуктов: 3 шт."
+
+
+class TestCategoryAddProductInheritance:
+    def test_add_product_works(self):
+        category = Category("Техника", "Разная", [])
+        phone = Smartphone(
+            "iPhone", "", 80000, 10, "A17", "15", "256", "черный"
+        )
+        category.add_product(phone)
+        assert len(category.products) == 1
+
+    def test_add_smartphone_to_category(self):
+        category = Category("Смартфоны", "Мобильные устройства", [])
+        phone = Smartphone(
+            "iPhone", "", 80000, 10, "A17", "15", "256", "черный"
+        )
+        category.add_product(phone)
+        assert "iPhone" in category.products[0]
+
+    def test_add_lawn_grass_to_category(self):
+        category = Category("Садовые товары", "Для сада", [])
+        grass = LawnGrass(
+            "Трава", "", 500, 100, "Россия", 14, "зеленый"
+        )
+        category.add_product(grass)
+        assert "Трава" in category.products[0]
+
+    def test_add_non_product_raises_error(self):
+        category = Category("Техника", "Разная", [])
+        with pytest.raises(TypeError, match="Можно добавить только объекты Product или его наследников"):
+            category.add_product("не продукт")
+
+    def test_add_int_raises_error(self):
+        category = Category("Техника", "Разная", [])
+        with pytest.raises(TypeError, match="Можно добавить только объекты Product или его наследников"):
+            category.add_product(123)
+
+    def test_add_list_raises_error(self):
+        category = Category("Техника", "Разная", [])
+        with pytest.raises(TypeError, match="Можно добавить только объекты Product или его наследников"):
+            category.add_product([1, 2, 3])

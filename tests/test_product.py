@@ -1,6 +1,6 @@
 import pytest
 
-from src.product import Product
+from src.product import LawnGrass, Product, Smartphone
 
 
 class TestProduct:
@@ -84,3 +84,65 @@ class TestProduct:
 
         with pytest.raises(TypeError, match="Нельзя сложить Product и NoneType"):
             result = product + None
+
+class TestSmartphone:
+    def test_smartphone_creation(self):
+        phone = Smartphone(
+            "iPhone 15", "Флагман", 80000, 10,
+            "A17 Pro", "15 Pro", "256GB", "черный"
+        )
+        assert phone.name == "iPhone 15"
+        assert phone.description == "Флагман"
+        assert phone.price == 80000
+        assert phone.quantity == 10
+        assert phone.efficiency == "A17 Pro"
+        assert phone.model == "15 Pro"
+        assert phone.memory == "256GB"
+        assert phone.color == "черный"
+
+
+class TestLawnGrass:
+    def test_lawn_grass_creation(self):
+        grass = LawnGrass(
+            "Газонная трава", "Для газона", 500, 100,
+            "Россия", 14, "зеленый"
+        )
+        assert grass.name == "Газонная трава"
+        assert grass.description == "Для газона"
+        assert grass.price == 500
+        assert grass.quantity == 100
+        assert grass.country == "Россия"
+        assert grass.germination_period == 14
+        assert grass.color == "зеленый"
+
+
+class TestProductAddInheritance:
+    def test_add_same_class_smartphone(self):
+        phone1 = Smartphone(
+            "iPhone", "", 80000, 10, "A17", "15", "256", "черный"
+        )
+        phone2 = Smartphone(
+            "Samsung", "", 70000, 5, "Exynos", "S23", "128", "белый"
+        )
+        result = phone1 + phone2
+        assert result == 80000 * 10 + 70000 * 5
+
+    def test_add_same_class_lawn_grass(self):
+        grass1 = LawnGrass(
+            "Трава А", "", 500, 100, "Россия", 14, "зеленый"
+        )
+        grass2 = LawnGrass(
+            "Трава Б", "", 600, 50, "Россия", 14, "зеленый"
+        )
+        result = grass1 + grass2
+        assert result == 500 * 100 + 600 * 50
+
+    def test_add_different_classes_raises_error(self):
+        phone = Smartphone(
+            "iPhone", "", 80000, 10, "A17", "15", "256", "черный"
+        )
+        grass = LawnGrass(
+            "Трава", "", 500, 100, "Россия", 14, "зеленый"
+        )
+        with pytest.raises(TypeError, match="Нельзя сложить Smartphone и LawnGrass"):
+            phone + grass
