@@ -36,3 +36,29 @@ class TestCategory:
         category.add_product(product)
         expected = "Laptop, 50000 руб. Остаток: 10 шт."
         assert category.products[0] == expected
+
+
+    def test_category_str_with_products(self):
+        """Проверка строкового отображения категории с продуктами"""
+        p1 = Product("Яблоко", "Сочное", 80, 15)
+        p2 = Product("Банан", "Сладкий", 120, 10)
+        p3 = Product("Апельсин", "Солнечный", 100, 5)
+        category = Category("Фрукты", "Вкусные фрукты", [p1, p2, p3])
+
+        expected = "Фрукты, количество продуктов: 30 шт."
+        assert str(category) == expected
+
+    def test_category_str_empty(self):
+        """Проверка строкового отображения пустой категории"""
+        category = Category("Пустая", "Ничего нет", [])
+        expected = "Пустая, количество продуктов: 0 шт."
+        assert str(category) == expected
+
+    def test_category_str_after_adding_product(self):
+        """Проверка, что __str__ обновляется после добавления продукта"""
+        category = Category("Электроника", "Гаджеты", [])
+        assert str(category) == "Электроника, количество продуктов: 0 шт."
+
+        product = Product("Ноутбук", "Игровой", 50000, 3)
+        category.add_product(product)
+        assert str(category) == "Электроника, количество продуктов: 3 шт."

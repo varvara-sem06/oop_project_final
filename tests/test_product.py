@@ -54,3 +54,33 @@ class TestProduct:
         assert result.name == "Laptop"
         assert result.price == 50000
         assert result.quantity == 3
+
+
+    def test_product_str(self):
+        product = Product("Ноутбук", "Игровой ноутбук", 50000, 10)
+        expected = "Ноутбук, 50000 руб. Остаток: 10 шт."
+        assert str(product) == expected
+
+    def test_product_add_two_products(self):
+        p1 = Product("Товар A", "Описание A", 100, 10)
+        p2 = Product("Товар B", "Описание B", 200, 2)
+        result = p1 + p2
+        assert result == 1400
+
+    def test_product_add_different_values(self):
+        p1 = Product("Телефон", "Смартфон", 50000, 3)
+        p2 = Product("Чехол", "Силиконовый", 1000, 10)
+        result = p1 + p2
+        assert result == 160000
+
+    def test_product_add_with_non_product_raises_error(self):
+        product = Product("Ноутбук", "Игровой", 50000, 5)
+
+        with pytest.raises(TypeError, match="Нельзя сложить Product и int"):
+            result = product + 100
+
+        with pytest.raises(TypeError, match="Нельзя сложить Product и str"):
+            result = product + "строка"
+
+        with pytest.raises(TypeError, match="Нельзя сложить Product и NoneType"):
+            result = product + None
