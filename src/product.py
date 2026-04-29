@@ -6,6 +6,7 @@ class LogMixin:
         super().__init__(*args, **kwargs)
         print(f"Создан объект {self.__class__.__name__} с параметрами: {args}")
 
+
 class Product(BaseProduct, LogMixin):
     name: str
     description: str
@@ -13,6 +14,9 @@ class Product(BaseProduct, LogMixin):
     quantity: int
 
     def __init__(self, name, description, price, quantity):
+        if quantity == 0:
+            raise ValueError(f"Товар с нулевым значением не может быть добавлен")
+
         LogMixin.__init__(self)
         self.name = name
         self.description = description
@@ -51,8 +55,6 @@ class Product(BaseProduct, LogMixin):
                 return
 
             self.__price = new_price
-            
-
 
     @classmethod
     def new_product(cls, product_dict, existing_products=None):
@@ -83,6 +85,7 @@ class Smartphone(Product):
         self.model = model
         self.memory = memory
         self.color = color
+
 
 class LawnGrass(Product):
     def __init__(self, name, description, price, quantity, country, germination_period, color):

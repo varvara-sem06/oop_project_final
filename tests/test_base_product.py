@@ -30,10 +30,6 @@ class TestBaseProduct:
             "Россия", 14, "зеленый"
         )
         assert isinstance(grass, BaseProduct)
-import pytest
-
-from src.base_product import BaseProduct
-from src.product import LawnGrass, Product, Smartphone
 
 
 class TestBaseProduct:
