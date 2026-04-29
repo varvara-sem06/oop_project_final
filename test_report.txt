@@ -1,0 +1,43 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.14.0, pytest-9.0.2, pluggy-1.6.0 -- /usr/local/bin/python3
+cachedir: .pytest_cache
+rootdir: /Users/varvara/Desktop
+configfile: pyproject.toml
+plugins: anyio-4.12.1, cov-7.0.0
+collecting ... collected 33 items
+
+tests/test_base_product.py::TestBaseProduct::test_cannot_instantiate_abstract_class PASSED [  3%]
+tests/test_base_product.py::TestBaseProduct::test_product_is_instance_of_base_product PASSED [  6%]
+tests/test_base_product.py::TestBaseProduct::test_smartphone_is_instance_of_base_product PASSED [  9%]
+tests/test_base_product.py::TestBaseProduct::test_lawn_grass_is_instance_of_base_product PASSED [ 12%]
+tests/test_category.py::TestCategory::test_private_products_attribute PASSED [ 15%]
+tests/test_category.py::TestCategory::test_add_product_single PASSED     [ 18%]
+tests/test_category.py::TestCategory::test_add_product_multiple PASSED   [ 21%]
+tests/test_category.py::TestCategory::test_products_getter_format PASSED [ 24%]
+tests/test_category.py::TestCategory::test_category_str_with_products PASSED [ 27%]
+tests/test_category.py::TestCategory::test_category_str_empty PASSED     [ 30%]
+tests/test_category.py::TestCategory::test_category_str_after_adding_product PASSED [ 33%]
+tests/test_category.py::TestCategoryAddProductInheritance::test_add_product_works PASSED [ 36%]
+tests/test_category.py::TestCategoryAddProductInheritance::test_add_smartphone_to_category PASSED [ 39%]
+tests/test_category.py::TestCategoryAddProductInheritance::test_add_lawn_grass_to_category PASSED [ 42%]
+tests/test_category.py::TestCategoryAddProductInheritance::test_add_non_product_raises_error PASSED [ 45%]
+tests/test_category.py::TestCategoryAddProductInheritance::test_add_int_raises_error PASSED [ 48%]
+tests/test_category.py::TestCategoryAddProductInheritance::test_add_list_raises_error PASSED [ 51%]
+tests/test_product.py::TestProduct::test_private_price_attribute PASSED  [ 54%]
+tests/test_product.py::TestProduct::test_price_getter PASSED             [ 57%]
+tests/test_product.py::TestProduct::test_price_setter_zero PASSED        [ 60%]
+tests/test_product.py::TestProduct::test_price_setter_negative PASSED    [ 63%]
+tests/test_product.py::TestProduct::test_classmethod_new_product_basic PASSED [ 66%]
+tests/test_product.py::TestProduct::test_classmethod_new_product_no_duplicate PASSED [ 69%]
+tests/test_product.py::TestProduct::test_product_str PASSED              [ 72%]
+tests/test_product.py::TestProduct::test_product_add_two_products PASSED [ 75%]
+tests/test_product.py::TestProduct::test_product_add_different_values PASSED [ 78%]
+tests/test_product.py::TestProduct::test_product_add_with_non_product_raises_error PASSED [ 81%]
+tests/test_product.py::TestSmartphone::test_smartphone_creation PASSED   [ 84%]
+tests/test_product.py::TestLawnGrass::test_lawn_grass_creation PASSED    [ 87%]
+tests/test_product.py::TestProductAddInheritance::test_add_same_class_smartphone PASSED [ 90%]
+tests/test_product.py::TestProductAddInheritance::test_add_same_class_lawn_grass PASSED [ 93%]
+tests/test_product.py::TestProductAddInheritance::test_add_different_classes_raises_error PASSED [ 96%]
+tests/test_product.py::TestLogMixin::test_multiple_creations_log_each PASSED [100%]
+
+============================== 33 passed in 0.02s ==============================
