@@ -146,3 +146,11 @@ class TestProductAddInheritance:
         )
         with pytest.raises(TypeError, match="Нельзя сложить Smartphone и LawnGrass"):
             phone + grass
+
+class TestLogMixin:
+    def test_multiple_creations_log_each(self, capsys):
+        """Проверка, что при создании нескольких объектов выводятся несколько сообщений"""
+        p1 = Product("Товар1", "Описание1", 100, 5)
+        p2 = Product("Товар2", "Описание2", 200, 10)
+        captured = capsys.readouterr()
+        assert captured.out.count("Создан объект Product") == 2
