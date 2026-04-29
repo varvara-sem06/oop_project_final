@@ -37,7 +37,6 @@ class TestCategory:
         expected = "Laptop, 50000 руб. Остаток: 10 шт."
         assert category.products[0] == expected
 
-
     def test_category_str_with_products(self):
         """Проверка строкового отображения категории с продуктами"""
         p1 = Product("Яблоко", "Сочное", 80, 15)
@@ -103,3 +102,20 @@ class TestCategoryAddProductInheritance:
         category = Category("Техника", "Разная", [])
         with pytest.raises(TypeError, match="Можно добавить только объекты Product или его наследников"):
             category.add_product([1, 2, 3])
+
+
+class TestCategoryMiddlePrice:
+    def test_middle_price_with_products(self):
+        category = Category("Тест", "Описание", [])
+        category.add_product(Product("Товар1", "", 100, 5))
+        category.add_product(Product("Товар2", "", 200, 10))
+        assert category.middle_price() == 150
+
+    def test_middle_price_empty_category(self):
+        category = Category("Пустая", "Нет товаров", [])
+        assert category.middle_price() == 0
+
+    def test_middle_price_one_product(self):
+        category = Category("Один товар", "Тест", [])
+        category.add_product(Product("Товар", "", 300, 5))
+        assert category.middle_price() == 300

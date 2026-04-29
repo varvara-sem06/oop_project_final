@@ -55,7 +55,6 @@ class TestProduct:
         assert result.price == 50000
         assert result.quantity == 3
 
-
     def test_product_str(self):
         product = Product("Ноутбук", "Игровой ноутбук", 50000, 10)
         expected = "Ноутбук, 50000 руб. Остаток: 10 шт."
@@ -84,6 +83,7 @@ class TestProduct:
 
         with pytest.raises(TypeError, match="Нельзя сложить Product и NoneType"):
             result = product + None
+
 
 class TestSmartphone:
     def test_smartphone_creation(self):
@@ -147,6 +147,7 @@ class TestProductAddInheritance:
         with pytest.raises(TypeError, match="Нельзя сложить Smartphone и LawnGrass"):
             phone + grass
 
+
 class TestLogMixin:
     def test_multiple_creations_log_each(self, capsys):
         """Проверка, что при создании нескольких объектов выводятся несколько сообщений"""
@@ -154,3 +155,13 @@ class TestLogMixin:
         p2 = Product("Товар2", "Описание2", 200, 10)
         captured = capsys.readouterr()
         assert captured.out.count("Создан объект Product") == 2
+
+
+class TestProductQuantityValidation:
+    def test_product_zero_quantity_raises_error(self):
+        with pytest.raises(ValueError, match="Товар с нулевым значением не может быть добавлен"):
+            Product("Тест", "Описание", 100, 0)
+
+    def test_product_positive_quantity_works(self):
+        product = Product("Тест", "Описание", 100, 5)
+        assert product.quantity == 5
