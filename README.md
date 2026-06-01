@@ -1,133 +1,145 @@
-# ООП проект: Интернет-магазин (версия с инкапсуляцией)
+# Online Store (OOP Version with Encapsulation)
 
-## Описание проекта
+A Python implementation of basic online store logic using an object-oriented approach. This version adds encapsulation of key attributes, getters and setters, a class method for creating products from dictionaries, abstract classes, mixins, and full test coverage.
 
-Проект представляет собой реализацию базовой логики интернет-магазина на языке Python с использованием объектно-ориентированного подхода.  
-В данной версии добавлена **инкапсуляция** ключевых атрибутов, реализованы **геттеры и сеттеры**, **класс-метод** для создания товаров из словаря, а также **написаны тесты** с проверкой покрытия.
+## Classes
 
-## Классы
+### Product
 
-### `Product` (Товар)
+Stores product information:
 
-Хранит информацию о товаре:
-- `name` — название
-- `description` — описание
-- `price` — цена (приватный атрибут `__price`)
-- `quantity` — количество на складе
+- `name` — product name
+- `description` — product description
+- `__price` — price (private attribute)
+- `quantity` — stock quantity
 
-#### Новый функционал:
-- Приватная цена (`__price`) с доступом через `@property`
-- Сеттер `price` с проверкой:
-  - Цена не может быть ≤ 0 (выводится сообщение)
-  - При понижении цены запрашивается подтверждение пользователя (`y/n`)
-- Класс-метод `new_product`:
-  - Создаёт товар из словаря
-  - При наличии товара с таким же именем — складывает количество и выбирает максимальную цену
+Features:
 
-### `Category` (Категория)
+- Private price (`__price`) with `@property` access
+- Setter with validation:
+  - Price cannot be ≤ 0 (message displayed)
+  - When lowering the price, user confirmation is requested (y/n)
+- Class method `new_product`:
+  - Creates a product from a dictionary
+  - If a product with the same name exists, quantities are summed and the highest price is kept
+- `__str__`: returns `Product name, 80 rub. Stock: 15 pcs.`
+- `__add__`: adds two products by multiplying price × quantity for each and returning the sum
 
-Хранит информацию о категории:
-- `name` — название
-- `description` — описание
-- `__products` — приватный список товаров
+### Category
 
-#### Новый функционал:
-- Приватный список товаров (`__products`)
-- Метод `add_product` для добавления товара
-- Геттер `products`, возвращающий список строк в формате
+Stores category information:
 
-## Магические методы
+- `name` — category name
+- `description` — category description
+- `__products` — private list of products
 
-В проект добавлены магические методы для удобной работы с продуктами и категориями:
+Features:
 
-### `__str__` для Product
-Позволяет выводить продукт в читаемом формате:
-Название продукта, 80 руб. Остаток: 15 шт.
+- Private product list (`__products`)
+- Method `add_product` for adding a product
+- Getter `products` that returns a list of formatted strings
+- `__str__`: returns `Category name, product count: 30 pcs.`
 
-### `__str__` для Category
-Показывает название категории и общее количество товаров на складе:
-Фрукты, количество продуктов: 30 шт.
+## Inheritance
 
-text
+### Smartphone (inherits from Product)
 
-### `__add__` для Product
-Позволяет складывать продукты для получения общей стоимости всех товаров на складе:
+Additional attributes:
+
+- `efficiency` — performance
+- `model` — model
+- `memory` — internal memory
+- `color` — color
+
+### LawnGrass (inherits from Product)
+
+Additional attributes:
+
+- `country` — country of origin
+- `germination_period` — germination period (days)
+- `color` — color
+
+### Type-safe addition
+
+Products can only be added to products of the same class:
+
 ```python
-apple = Product("Яблоко", "сочное", 80, 15)   # 80 × 15 = 1200
-banana = Product("Банан", "сладкий", 120, 10)  # 120 × 10 = 1200
-print(apple + banana)  # 2400
-
-## Наследование и новые типы товаров
-
-В проект добавлена иерархия классов товаров:
-
-### Класс `Smartphone` (наследник `Product`)
-Дополнительные атрибуты:
-- `efficiency` — производительность
-- `model` — модель
-- `memory` — объём встроенной памяти
-- `color` — цвет
-
-### Класс `LawnGrass` (наследник `Product`)
-Дополнительные атрибуты:
-- `country` — страна-производитель
-- `germination_period` — срок прорастания (дни)
-- `color` — цвет
-
-### Защита от некорректного сложения
-Теперь можно складывать только товары одного класса:
-```python
-phone1 + phone2   # ✅ работает
-grass1 + grass2   # ✅ работает
+phone1 + phone2   # ✅ works
+grass1 + grass2   # ✅ works
 phone + grass     # ❌ TypeError
-## Технологии
 
-## Абстрактный класс BaseProduct и миксин LogMixin
+Abstract Class and Mixin
 
-### BaseProduct (абстрактный класс)
-Родительский класс для всех продуктов. Определяет обязательные методы:
-- `__str__` — строковое представление продукта
-- `__add__` — сложение продуктов
-- `price` — геттер цены (property)
+BaseProduct (abstract class)
 
-### LogMixin (миксин)
-Автоматически логирует создание объектов Product, Smartphone и LawnGrass:
-Создан объект Product с параметрами: ('Яблоко', 'Сладкое', 80, 15)
+Parent class for all products. Defines required methods:
+
+__str__ — string representation
+__add__ — product addition
+price — price getter (property)
+
+LogMixin
+
+Automatically logs object creation for Product, Smartphone, and LawnGrass:
 
 text
+Created Product object with parameters: ('Apple', 'Sweet', 80, 15)
+Tech Stack
 
-### Проверка абстрактного класса
-```python
-# ❌ Нельзя создать экземпляр абстрактного класса
-# base = BaseProduct()  # TypeError!
+Python 3.x
+pytest + pytest-cov (testing and coverage)
+flake8 (code style)
+isort (import ordering)
+mypy (type checking)
+coverage (coverage reports)
+Running Tests and Linters
 
-# ✅ Можно создавать продукты
-product = Product("Товар", "Описание", 100, 5)
-phone = Smartphone("iPhone", "Флагман", 80000, 10, "A17", "15", "256GB", "черный")
+Run all commands from the project root.
 
+Linters
 
-- Python 3.x
-- pytest + pytest-cov (тестирование и покрытие)
-- flake8 (стиль кода)
-- isort (порядок импортов)
-- mypy (проверка типов)
-- coverage (отчёты о покрытии)
-
-## Запуск тестов и линтеров
-
-Все команды выполняются из корневой папки проекта.
-
-### Линтеры
-
-```bash
-# Проверка порядка импортов
+bash
+# Check import order
 python3 -m isort --check-only .
 
-# Автоисправление импортов
+# Auto-fix imports
 python3 -m isort .
 
-# Проверка стиля кода
+# Check code style
 python3 -m flake8 .
 
-# Проверка типов
+# Type checking
 python3 -m mypy .
+Tests
+
+bash
+# Run tests
+python3 -m pytest
+
+# Run tests with coverage report
+python3 -m pytest --cov=src --cov-report=term-missing
+Project Structure
+
+text
+online_store/
+│
+├── src/
+│   ├── __init__.py
+│   ├── base_product.py
+│   ├── product.py
+│   ├── smartphone.py
+│   ├── lawn_grass.py
+│   ├── category.py
+│   └── log_mixin.py
+│
+├── tests/
+│   ├── __init__.py
+│   ├── test_product.py
+│   ├── test_smartphone.py
+│   ├── test_lawn_grass.py
+│   └── test_category.py
+│
+├── .flake8
+├── .gitignore
+├── requirements.txt
+└── README.md
